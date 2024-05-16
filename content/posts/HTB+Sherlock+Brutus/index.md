@@ -1,7 +1,7 @@
 ---
 title: "HTB Sherlock Brutus Writeup"
 date: 2024-05-11T21:50:07+08:00
-draft: true
+draft: false
 description: "HackTheBox Sherlock Brutus Writeup"
 slug: "HTB+Sherlock+Brutus+Writeup"
 tags: ["HackTheBox", "HTB", "Sherlock", "Brutus"]
