@@ -10,10 +10,18 @@ tags: ["HackTheBox", "HTB", "Sherlock", "Brutus"]
 ## Sherlock Scenario
 In this very easy Sherlock, you will familiarize yourself with Unix auth.log and wtmp logs. We'll explore a scenario where a Confluence server was brute-forced via its SSH service. After gaining access to the server, the attacker performed additional activities, which we can track using auth.log. Although auth.log is primarily used for brute-force analysis, we will delve into the full potential of this artifact in our investigation, including aspects of privilege escalation, persistence, and even some visibility into command execution.
 
-## 題目素材
-壓縮檔中有兩個檔案
-- auth.log
-- wtmp
+## Evidences Overview
+```bash
+┌──(kali㉿kali)-[~/Desktop/HTB/Brutus]
+└─$ unzip -l Brutus.zip
+Archive:  Brutus.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+    43911  03-06-2024 11:47   auth.log
+    11136  03-06-2024 11:47   wtmp
+---------                     -------
+    55047                     2 files
+```
 
 ### auth.log
 問 ChatGPT：
@@ -59,10 +67,10 @@ user2  pts/1        192.168.1.101    Sun May  8 08:00 - 10:15  (02:15)
 
 要讀取 `wtmp` 檔案的二進制格式需要一些特殊的工具或程式庫來解析。可以自行編寫程式來讀取，或在 Unix 和 Linux 系統中使用 `utmpdump`。
 
-## 問題
+## Questions
 
 ### Question 1
-Analyzing the auth.log, can you identify the IP address used by the attacker to carry out a brute force attack?
+> Analyzing the auth.log, can you identify the IP address used by the attacker to carry out a brute force attack?
 
 `grep` 一下 `auth.log` 中 `sshd` 一直登入失敗的紀錄，看是哪個 IP 被攻擊者使用。只有 65.2.161.68 這一個 IP 有失敗多次的紀錄。
 
@@ -118,10 +126,11 @@ sshd[2409]: Failed password for root from 65.2.161.68 port 46890 ssh2
 sshd[2423]: Failed password for backup from 65.2.161.68 port 34834 ssh2
 sshd[2424]: Failed password for backup from 65.2.161.68 port 34856 ssh2
 ```
+
 **Ans: 51.2.161.68**
 
 ### Question 2
-The brute force attempts were successful, and the attacker gained access to an account on the server. What is the username of this account?
+> The brute force attempts were successful, and the attacker gained access to an account on the server. What is the username of this account?
 
 一樣 `grep` 一下 `auth.log`，這次要找的是成功登入的紀錄，關鍵字是 Accepted。攻擊者的 IP 成功登入的使用者是 `root`。
 
@@ -137,7 +146,7 @@ sshd[2667]: Accepted password for cyberjunkie from 65.2.161.68 port 43260 ssh2
 **Ans: root**
 
 ### Question 3
-Can you identify the timestamp when the attacker manually logged in to the server to carry out their objectives?
+> Can you identify the timestamp when the attacker manually logged in to the server to carry out their objectives?
 
 暴力破解僅嘗試密碼是否可以登入，成功登入就會馬上登出。後續待攻擊者自行登入利用。一開始先回答了 `auth.log` 的時間戳，結果是錯誤的答案，確認一下提示得知要參考的是 `wtmp` 的時間。
 
@@ -192,7 +201,7 @@ Can you identify the timestamp when the attacker manually logged in to the serve
 **Ans: 2024-03-06 06:32:45**
 
 ### Question 4
-SSH login sessions are tracked and assigned a session number upon login. What is the session number assigned to the attacker's session for the user account from Question 2?
+> SSH login sessions are tracked and assigned a session number upon login. What is the session number assigned to the attacker's session for the user account from Question 2?
 
 `grep` 一下 `auth.log` 中 New session 的紀錄，對應時間建立的工作階段編號是 37。
 
@@ -208,7 +217,7 @@ Mar  6 06:37:34 ip-172-31-35-28 systemd-logind[411]: New session 49 of user cybe
 **Ans: 37**
 
 ### Question 5
-The attacker added a new user as part of their persistence strategy on the server and gave this new user account higher privileges. What is the name of this account?
+> The attacker added a new user as part of their persistence strategy on the server and gave this new user account higher privileges. What is the name of this account?
 
 攻擊者新增了一個使用者，並賦予他更高的權限，相關的指令是 `groupadd`，所以 `grep` 一下 add 看看。攻擊者新增了一個叫 `cyberjunkie` 的使用者，並把它加進 `sudo` 群組。 
 
@@ -226,7 +235,7 @@ Mar  6 06:35:15 ip-172-31-35-28 usermod[2628]: add 'cyberjunkie' to shadow group
 **Ans: cyberjunkie**
 
 ### Question 6
-What is the MITRE ATT&CK sub-technique ID used for persistence?
+> What is the MITRE ATT&CK sub-technique ID used for persistence?
 
 攻擊者新建了一個本地使用者。
 
@@ -236,7 +245,7 @@ What is the MITRE ATT&CK sub-technique ID used for persistence?
 **Ans: T1136.001**
 
 ### Question 7
-How long did the attacker's first SSH session last based on the previously confirmed authentication time and session ending within the auth.log? (seconds)
+> How long did the attacker's first SSH session last based on the previously confirmed authentication time and session ending within the auth.log? (seconds)
 
 從 `auth.log` 尋找 session 37 的相關紀錄，然後計算開始到結束的時間差。結果送出答案後是錯的，所以改用 `wtmp` 的時間試試看，Bingo！
 
@@ -252,7 +261,7 @@ Mar  6 06:37:24 ip-172-31-35-28 systemd-logind[411]: Removed session 37.
 **Ans: 279**
 
 ### Question 8
-The attacker logged into their backdoor account and utilized their higher privileges to download a script. What is the full command executed using sudo?
+> The attacker logged into their backdoor account and utilized their higher privileges to download a script. What is the full command executed using sudo?
 
 攻擊者新建的後門帳戶使用高權限去下載惡意腳本，前面提到該帳戶被加入 `sudo` 群組，所以 `grep` 字串 `sudo` 發現有兩個命令被執行，其中一個正是透過 `curl` 下載腳本。
 
