@@ -15,29 +15,30 @@ jobs:
      steps:
        # 使用當前的 repo
        - name: checkout private repo
-         uses: actions/checkout@v3
+         uses: actions/checkout@v4
          with:
           # 因為目前的 repo 有使用到 submodule，所以 submodule 也要一併同步	
           # 不然原本的 repo 是沒有 submodule 的內容
           submodules: true
-          token: ${{ secrets.GH_Action }}
+          lfs: true
 
        # 我的公開網站是放置在另一個 repo 所以這裡也要 clone 一份下來處理
        # 因為我 Hugo 預設是產生檔案到 public 資料夾，所以這邊我也是 clone 到那裡
        - name: checkout public repo
-         uses: actions/checkout@v3
+         uses: actions/checkout@v4
          with:
           # 這裡是那個網站在 github 上的 repo 名稱
           repository: KinJih/KinJih.github.io
           path: public
           # 記得去產生一把 personal access token 放到 repo 的 secrets 裡
-          # 然後我 secrets 裡的名稱就叫 GH_Action，用別的名稱的話記得改掉
+          # 然後我 secrets 裡的名稱就叫 BLOG_PAT，用別的名稱的話記得改掉
+          # 現在不能叫做 GITHUB_PAT 了
           # 參考 https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token
           token: ${{ secrets.GH_Action }}
 
        # 使用別人做好的 Hugo Actions
        - name: setup hugo
-         uses: peaceiris/actions-hugo@v2
+         uses: peaceiris/actions-hugo@v3
          with:
            hugo-version: latest
            extended: true

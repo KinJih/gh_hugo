@@ -1,16 +1,16 @@
 ---
 title: "Posts"
-draft: false
+draft: true
 
-showDate : false
-showDateUpdated : false
-showHeadingAnchors : false
-showPagination : false
-showReadingTime : false
+showDate : true
+showDateUpdated : true
+showHeadingAnchors : true
+showPagination : true
+showReadingTime : true
 showTableOfContents : true
-showTaxonomies : false 
-showWordCount : false
-showSummary : false
+showTaxonomies : true 
+showWordCount : true
+showSummary : true
 sharingLinks : false
 
 ---

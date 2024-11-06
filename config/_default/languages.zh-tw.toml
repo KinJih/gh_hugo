@@ -8,17 +8,17 @@ title = "KinJih's space"
   isoCode = "zh-tw"
   rtl = false
   dateFormat = "2006-01-02"
-  #logo = "img/logo.png"
-  # secondaryLogo = "PATH"
-  # description = "A powerful, lightweight theme for Hugo built with Tailwind CSS."
+  logo = "img/logo.png"
+  #secondaryLogo = "img/logo.png"
+  description = "o_O"
   # copyright = "Copy, _right?_ :thinking_face:"
 
-[author]
+[params.author]
   name = "KinJih"
   image = "img/avatar.jpg"
   headline = "o_O"
   bio = "o_O"
-#  links = [
+  links = [
 #     { email = "mailto:hello@your_domain.com" },
 #     { link = "https://link-to-some-website.com/" },
 #     { amazon = "https://www.amazon.com/hz/wishlist/ls/wishlist-id" },
@@ -31,7 +31,7 @@ title = "KinJih's space"
 #     { facebook = "https://facebook.com/username" },
 #     { flickr = "https://www.flickr.com/photos/username/" },
 #     { foursquare = "https://foursquare.com/username" },
-#     { github = "https://github.com/username" },
+     { github = "https://github.com/KinJih" },
 #     { gitlab = "https://gitlab.com/username" },
 #     { google = "https://www.google.com/" },
 #     { hashnode = "https://username.hashnode.dev" },
@@ -57,8 +57,8 @@ title = "KinJih's space"
 #     { tiktok = "https://tiktok.com/@username" },
 #     { tumblr = "https://username.tumblr.com" },
 #     { twitch = "https://twitch.tv/username" },
-#     { twitter = "https://twitter.com/username" },
+     { x-twitter = "https://twitter.com/_KinJih" },
 #     { whatsapp = "https://wa.me/phone-number" },
 #     { youtube = "https://youtube.com/username" },
 #     { ko-fi = "https://ko-fi.com/username" },
-#  ]
+  ]

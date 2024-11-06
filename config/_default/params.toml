@@ -16,9 +16,10 @@ mainSections = ["posts"]
 # robots = ""
 
 disableImageOptimization = false
+disableTextInHeader = false
 
 defaultBackgroundImage = "img/aig-ai230706109-xl.jpg"
-defaultFeaturedImage = "img/aig-ai230706109-xl.jpg"
+#defaultFeaturedImage = "img/defaultFeaturedImage.jpg"
 
 highlightCurrentMenuArea = true
 smartTOC = true
@@ -36,7 +37,7 @@ smartTOCHideUnfocusedChildren = false
 
 [homepage]
   layout = "background" # valid options: page, profile, hero, card, background, custom
-  homepageImage = "/img/aig-ai20221111056-xl_TP_V.jpg" # used in: hero, and card
+  #homepageImage = "/img/homepageImage.jpg" # used in: hero, and card
   showRecent = true
   showRecentItems = 6
   showMoreLink = true
@@ -76,7 +77,7 @@ smartTOCHideUnfocusedChildren = false
   showHero = true
   heroStyle = "background" # valid options: basic, big, background, thumbAndBackground
   layoutBackgroundBlur = true # only used when heroStyle equals background
-  layoutBackgroundHeaderSpace = true
+  layoutBackgroundHeaderSpace = false
   showBreadcrumbs = false
   showSummary = false
   showViews = false
@@ -113,13 +114,13 @@ smartTOCHideUnfocusedChildren = false
   cardViewScreenWidth = false
   
 [firebase]
-  apiKey = "AIzaSyBCag7cEw9cD9bJ6BKB2YXxx8P6wUXtE8E"
-  authDomain = "gh-hugo-9f8c3.firebaseapp.com"
-  projectId = "gh-hugo-9f8c3"
-  storageBucket = "gh-hugo-9f8c3.appspot.com"
-  messagingSenderId = "735604107611"
-  appId = "1:735604107611:web:b6445a3b85e735bcf3527e"
-  measurementId = "G-CGTX9VEPRN"
+  apiKey = "AIzaSyCeSylmxhGqEJT-3ZV7bC1wwZiwEw98trs"
+  authDomain = "gh-hugo-a32c0.firebaseapp.com"
+  projectId = "gh-hugo-a32c0"
+  storageBucket = "gh-hugo-a32c0.firebasestorage.app"
+  messagingSenderId = "392178058857"
+  appId = "1:392178058857:web:010f73ea15601e4aeb44f8"
+  measurementId = "G-NX107QT319"
 
 [fathomAnalytics]
   # site = "ABC12345"

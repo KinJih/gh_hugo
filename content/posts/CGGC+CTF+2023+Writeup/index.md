@@ -2,7 +2,8 @@
 title: "CGGC CTF 2023 初賽 Writeup"
 date: 2023-12-09T17:06:08+08:00
 draft: false
-description: "CGGC CTF 2023"
+showSummary: true
+summary: "CGGC CTF 2023"
 slug: "CGGC+CTF+2023+Writeup"
 tags: ["CGGC", "CTF", "2023"]
 ---
